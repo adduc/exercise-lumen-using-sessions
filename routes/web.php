@@ -16,3 +16,18 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('/set', function (\Illuminate\Http\Request $request) {
+
+    $request->session()->put('name', 'Lumen-Session ' . random_int(PHP_INT_MIN, PHP_INT_MAX));
+
+    return response()->json([
+        'session.name' => $request->session()->get('name')
+    ]);
+});
+
+$router->get('/get', function (\Illuminate\Http\Request $request) {
+    return response()->json([
+        'session.name' => $request->session()->get('name'),
+    ]);
+});
